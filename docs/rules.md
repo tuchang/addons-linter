@@ -5,31 +5,21 @@ This document is automatically published on [github pages](http://mozilla.github
 To update it edit `docs/rules.md` in the
 [github repo](https://github.com/mozilla/addons-linter).
 
-* :white_check_mark: means the rule has been ported/implemented
+* :white_check_mark: means the rule has been implemented
 * :negative_squared_cross_mark: means the rule has been removed
-* :x: means the rule hasn't been ported yet
 
-A :white_check_mark: next to a section of rules means they have all been filed in our [issues database](https://github.com/mozilla/addons-validator/issues).
 
 ## JavaScript
 
 ### Actions :white_check_mark:
 
-| Done? | MsgType | Rule name | Addon type | Description | File Type | Source ref | Old Code | New Code |
-| ----- | ------- | --------- | ---------- | ----------- | --------- | ---------- | -------- | -------- |
-| :negative_squared_cross_mark: | warning | dangerous_contract | | Dangerous XPCOM contract ID |  | [testcases/javascript/actions.py](https://github.com/mozilla/amo-validator/blob/master/validator/testcases/javascript/actions.py) | ('js', 'actions', 'dangerous_contract') | **Removed** |
-| :x: | warning | called_dangerous_global | | `%s` called in potentially dangerous manner' | | | | |
-| :white_check_mark: | warning | eval | | In order to prevent vulnerabilities, the `setTimeout` 'and `setInterval` functions should be called only with function expressions as their first argument. | | [testcases/javascript/actions.py](https://github.com/mozilla/amo-validator/blob/7a8011aba8bf8c665aef2b51eb26d0697b3e19c3/validator/testcases/javascript/actions.py#L488) | | NO_IMPLIED_EVAL |
-| :negative_squared_cross_mark: | notice |  \_readonly_top | | window.top is a reserved variable | | | ('testcases_javascript_actions', '_readonly_top' | **Removed** |
-| :x: | warning | global_overwrite | | Global variable overwrite | | | | |
-| :white_check_mark: | warning | unexpected_global_arg [NEW] | | Unexpected global passed as an argument | | | null | UNEXPECTED_GLOGAL_ARG |
+| Done? | MsgType | Rule name | Addon type | Description | File Type | Code |
+| ----- | ------- | --------- | ---------- | ----------- | --------- | ---- |
+| :white_check_mark: | warning | eval | | In order to prevent vulnerabilities, the `setTimeout` 'and `setInterval` functions should be called only with function expressions as their first argument. | JavaScript | NO_IMPLIED_EVAL |
 
 ### Call definitions :white_check_mark:
 | Done? | MsgType | Rule name | Addon type | Description | File Type | Source ref | Old Code | New Code |
 | ----- | ------- | --------- | ---------- | ----------- | --------- | ---------- | -------- | -------- |
-| :negative_squared_cross_mark: | warning | webbrowserpersist | | nsIWebBrowserPersist should no longer be used |  | [testcases/javascript/call_definitions.py](https://github.com/mozilla/amo-validator/blob/master/validator/testcases/javascript/call_definitions.py)| ('testcases_javascript_call_definititions', 'webbrowserpersist') | **Removed** |
-| :negative_squared_cross_mark: | warning | webbrowserpersist_saveuri | | saveURI should not be called with a null load context | | | ('testcases_javascript_call_definititions', 'webbrowserpersist_saveuri') | **Removed** |
-| :negative_squared_cross_mark: | notice | deprec | | Deprecated nsIJSON methods in use | | | ('testcases_javascript_calldefinitions', 'nsIJSON', 'deprec') | **Removed** |
 | :negative_squared_cross_mark: | notice | %s_nonliteral | | `%s` called with non-literal parameter. | | | | |
 | :white_check_mark: | notice | opendialog_nonlit_uri |  | openDialog called with non-literal parameter | | | ('js', 'instanceactions', 'openDialog_nonliteral' | OPENDIALOG_NONLIT_URI |
 | :negative_squared_cross_mark: | warning | %s_remote_uri | | `%s` called with non-local URI. | | | | |
@@ -215,10 +205,7 @@ A :white_check_mark: next to a section of rules means they have all been filed i
 
 | Done? | MsgType | Rule name | Addon type | Description | File Type | Source ref | Old Code | New Code |
 | ----- | ------- | --------- | ---------- | ----------- | --------- | ---------- | -------- | -------- |
-| :x: | notice | deprecated_file | |  Extension contains a deprecated file | | [testcases/packagelayout.py](https://github.com/mozilla/amo-validator/blob/master/validator/testcases/packagelayout.py) | | |
-| :x: | warning | FLAGGED_FILE_TYPE_type | | Flagged file type found | | | | |
 | :white_check_mark: | error | FILE_TOO_LARGE | webextension | File is too large to parse | | | | FILE_TOO_LARGE |
-| :x: | warning | java_jar | | Java JAR file detected | | | | |
 | :white_check_mark: | warning | disallowed_extension | | Flagged file extensions found | | https://github.com/mozilla/amo-validator/blob/master/validator/testcases/packagelayout.py | | FLAGGED_FILE_EXTENSION |
 | :negative_squared_cross_mark: | error | test_godlikea | | Banned 'godlikea' chrome namespace | | | | |
 | :white_check_mark: | notice | disallowed_type | | (Binary) Flagged file type found | | https://github.com/mozilla/amo-validator/blob/master/validator/testcases/packagelayout.py | | FLAGGED_FILE_TYPE |
@@ -239,52 +226,6 @@ A :white_check_mark: next to a section of rules means they have all been filed i
 | :white_check_mark: | notice | missing_manifest_json | | Add-on missing manifest_json for type detection | | | ('typedetection', 'detect_type', 'missing_manifest_json') | TYPE_NO_MANIFEST_JSON |
 
 
-## Themes
-
-| Done? | MsgType | Rule name | Addon type | Description | File Type | Source ref | Old Code | New Code |
-| ----- | ------- | --------- | ---------- | ----------- | --------- | ---------- | -------- | -------- |
-| :negative_squared_cross_mark: | warning | invalid_chrome_manifest_subject | theme | chrome.manifest files for full themes are only allowed to have 'skin' and 'style' items. Other types of items are disallowed for security reasons.' | chrome.manifest | [testcases/themes.py](https://github.com/mozilla/amo-validator/blob/master/validator/testcases/themes.py) | | |
-| :negative_squared_cross_mark: | warning | theme_js | theme | Themes should not contain executable code. | \*.js | [testcases/scripting.py](https://github.com/mozilla/amo-validator/blob/master/validator/testcases/themes.py) | | |
-
-
-## Regex Tests
-
-*Note the rule names for these do not come from the code*
-
-| Done? | MsgType | Rule name | Addon type | Description | File Type | Source ref | Old Code | New Code |
-| ----- | ------- | --------- | ---------- | ----------- | --------- | ---------- | -------- | -------- |
-| :negative_squared_cross_mark: | warning | invalid_sync_services_object_reuse |   | Sync services objects are not intended to be re-used |  | [testcases/regex.py](https://github.com/mozilla/amo-validator/blob/master/validator/testcases/regex.py) | | |
-| :x: | warning | warn_mouse_events |   | Mouse events may cause performance issues |  |  | | |
-| :x: | warning | dom_mutation_events_disallowed |  | DOM mutation event use prohibited |  | | | |
-| :negative_squared_cross_mark: | warning | new_tab_override |  |  Possible attempt to override new tab page |  | | | |
-| :x: | warning | unsafe_template_escape |  | Potentially unsafe template escape sequence | | | | |
-| :x: | warning | js_protoype_extension_dissallowed |  | JS prototype extension not allowed  | | | | |
-| :negative_squared_cross_mark: | warning | composition_features_removed |  | nsICompositionStringSynthesizer, sendCompositionEvent and createCompositionStringSynthesizer were removed | | | | |
-| :negative_squared_cross_mark: | warning | asyncfetch2_newchannel2_deprecated |  | asyncFetch2 and newChannel2 are now deprecated | | | | |
-| :negative_squared_cross_mark: | warning | onproxyavailable_asyncresolve_changed |  | The onProxyAvailable and asyncResolve functions have changed |  | | | |
-| :negative_squared_cross_mark: | warning | noSuchMethod_deprecated |  | The \_\_noSuchMethod__ property has been deprecated |  | | | |
-| :negative_squared_cross_mark: | warning | sendAsBinary_removed |  | The function sendAsBinary() in XMLHttpRequest has been removed |  | | | |
-| :negative_squared_cross_mark: | warning | theme_prefs_changed | | The preferences used to store theme selection have changed |  | | | |
-| :negative_squared_cross_mark: | warning | old_keywords_api_deprecated | | The old keywords API is deprecated | | | | |
-| :negative_squared_cross_mark: | warning | fuel_library_deprecated | | The FUEL library is now deprecated | | | | |
-| :negative_squared_cross_mark: | warning | dictjsm_removed | | The Dict.jsm module has been removed | | | | |
-| :negative_squared_cross_mark: | warning | sessionstore_state_write_removed | | The sessionstore-state-write notification has been removed. | | | | |
-| :negative_squared_cross_mark: | warning | nsISSLErrorListener_removed | | The nsISSLErrorListener interface has been removed |  | | | |
-| :negative_squared_cross_mark: | warning | widget_module_removed | | The widget module has been removed | | | | |
-| :negative_squared_cross_mark: | warning | user_profile_data_reference | | Reference to critical user profile data | | | | |
-| :negative_squared_cross_mark: | warning | em_action_requested | | Obsolete Extension Manager API | | | | |
-| :negative_squared_cross_mark: | warning | unsafe_pref_branch_ref | | Potentially unsafe preference branch  referenced (x2) | | | | |
-| :negative_squared_cross_mark: | warning | browsernewtaburl_pref_removed |  |  The browser.newtab.url preference has been removed | | | | |
-| :negative_squared_cross_mark: | warning | password_stored_in_prefs | | Passwords should not be stored in preferences | | | | |
-
-## Thunderbird Regex Tests
-
-*Note the rule names for these do not come from the code*
-
-
-| Done? | MsgType | Rule name | Addon type | Description | File Type | Source ref | Old Code | New Code |
-| ----- | ------- | --------- | ---------- | ----------- | --------- | ---------- | -------- | -------- |
-| :negative_squared_cross_mark: | warning | removed_labels_in_use |  | Removed labels in use (Repeated for multiple versions) | | | | |
 
 ## Web Extensions
 
